@@ -15,8 +15,9 @@
   </head>
 
   <body>
+    <h1 class="title">Fibonacci Calculator</h1>
     <div class="form-group">
-      <label for="inputNumber">The Fibonacci Of:</label>
+      <label class="label" for="inputNumber">The Fibonacci Of</label>
       <input
         class="input"
         type="number"
@@ -33,8 +34,17 @@
       >
         Is
       </button>
+
+      <span class="loader" id="loader"></span>
       <span id="result"></span>
+      <span id="errorFortyTwo"></span>
+      <div id="error-50"></div>
     </div>
+    <!-- <div id="error-50"></div> -->
+    <!-- <div class="error-msg red-text">
+      Can't be larger than 50
+    </div> -->
+
     <script type="text/javascript" src="js/fibonacci.js"></script>
   </body>
 </html>

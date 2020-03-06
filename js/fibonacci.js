@@ -1,13 +1,78 @@
-/*function getData() {
-  fetch("http://localhost:5050/fibonacci/7")
-    .then(response => response.json())
-    // Transform the data into json
-    .then(function(data) {
-      // Create and append the li's to the ul
-      console.log(data);
-    });
+const errorMsg = document.getElementById("error-50");
+const errorFortyTwo = document.getElementById("errorFortyTwo");
+let result = document.getElementById("result");
+const inputBox = document.getElementById("userInput");
+const loader = document.querySelector(".loader");
+
+submitButton.addEventListener("click", () => {
+  let inputNumber = parseInt(userInput.value);
+  console.log(inputNumber);
+
+  //const errorMsg = document.getElementById("error-50");
+  // errorMsg.style.visibility = "hidden";
+  // document.getElementById("errorFortyTwo").style.visibility = "hidden";
+  // document.getElementById("result").style.visibility = "hidden";
+  // document.getElementById("userInput").classList.remove("red-text");
+
+  errorMsg.style.visibility = "hidden";
+  errorFortyTwo.style.visibility = "hidden";
+  result.style.visibility = "hidden";
+  inputBox.classList.remove("red-text");
+
+  if (inputNumber > 50) {
+    printError50(errorMsg);
+  } else {
+    //document.querySelector(".loader").style.visibility = "visible";
+    loader.style.visibility = "visible";
+
+    fetch("http://localhost:5050/fibonacci/" + inputNumber)
+      .then(response => {
+        if (response.status === 400) {
+          return response.text();
+        } else {
+          return response.json();
+        }
+      })
+
+      //if response is a json(object) do first one, if text, do second one
+      .then(data => {
+        console.log(data);
+        if (typeof data === "object") {
+          loader.style.visibility = "hidden";
+          result.style.visibility = "visible";
+          result.innerText = data.result;
+
+          // document.querySelector(".loader").style.visibility = "hidden";
+          // document.getElementById("result").style.visibility = "visible";
+          // document.getElementById("result").innerText = data.result;
+        } else {
+          loader.style.visibility = "hidden";
+          errorFortyTwo.style.visibility = "visible";
+          errorFortyTwo.innerText = "Server Error: " + data;
+          errorFortyTwo.classList.add("fortyTwo");
+
+          // document.querySelector(".loader").style.visibility = "hidden";
+          // document.getElementById("errorFortyTwo").style.visibility = "visible";
+          // document.getElementById("errorFortyTwo").innerText =
+          //   "Server Error: " + data;
+          // document.getElementById("errorFortyTwo").classList.add("fortyTwo");
+        }
+      });
+  }
+});
+
+function printError50(errorMsg) {
+  errorMsg.innerText = "can't be larger than 50";
+  errorMsg.classList.add("error-50-style", "red-text");
+  inputBox.classList.add("red-text");
+  errorMsg.style.visibility = "visible";
+
+  // document.getElementById("userInput").classList.add("red-text");
+  // errorMsg.style.visibility = "visible";
 }
- function fibonacci(x) {
+
+//local fibonacci func
+function fibonacci(x) {
   let f1 = 0;
   let f2 = 1;
   let fx;
@@ -24,30 +89,4 @@
     }
   }
   return fx;
-}*/
-
-// submitButton.addEventListener("click", () => {
-//   let inputNumber = parseInt(userInput.value);
-//   console.log(inputNumber);
-
-//   fetch("http://localhost:5050/fibonacci/" + inputNumber)
-//     .then(response => response.json())
-//     .then(function(data) {
-//       console.log(data);
-//       document.getElementById("result").innerText = data.result;
-//     });
-//});
-
-submitButton.addEventListener("click", () => {
-  let inputNumber = parseInt(userInput.value);
-  console.log(inputNumber);
-
-  fetch("http://localhost:5050/fibonacci/" + inputNumber)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      document.getElementById("result").innerText = data.result;
-    });
-});
+}
