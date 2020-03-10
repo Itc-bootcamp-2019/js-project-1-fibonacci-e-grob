@@ -3,10 +3,13 @@ const errorFortyTwo = document.getElementById("errorFortyTwo");
 let result = document.getElementById("result");
 const inputBox = document.getElementById("userInput");
 const loader = document.querySelector(".loader");
+let dataList = document.getElementById("all-data");
 
+//function print all array data
+getData();
 submitButton.addEventListener("click", () => {
   let inputNumber = parseInt(userInput.value);
-  console.log(inputNumber);
+  //console.log(inputNumber);
 
   errorMsg.style.visibility = "hidden";
   errorFortyTwo.style.visibility = "hidden";
@@ -29,7 +32,7 @@ submitButton.addEventListener("click", () => {
 
       //if response is a json(object) do first one, if text, do second one
       .then(data => {
-        console.log(data);
+        //console.log(data);
         if (typeof data === "object") {
           loader.style.visibility = "hidden";
           result.style.visibility = "visible";
@@ -41,8 +44,32 @@ submitButton.addEventListener("click", () => {
           errorFortyTwo.classList.add("fortyTwo");
         }
       });
+    getData();
   }
 });
+function getData() {
+  loader2.style.visibility = "visible";
+  fetch("http://localhost:5050/getFibonacciResults")
+    .then(response => response.json())
+    .then(data => {
+      //console.log(data.results);
+      const allResults = data.results;
+      loader2.style.visibility = "hidden";
+      displayAll(allResults);
+    });
+}
+function displayAll(allResults) {
+  //console.log(allResults.length);
+  for (let i = 0; i < allResults.length; i++) {
+    let num = allResults[i].number;
+    let res = allResults[i].result;
+    let date = new Date(allResults[i].createdDate);
+    dataList.classList.add("result-list-style");
+    dataList.innerHTML +=
+      `<li>The Fibonacci of <b>${num}</b> is <b>${res}</b>. Calculated at: ${date}</li>` +
+      "<hr>";
+  }
+}
 
 function printError50(errorMsg) {
   errorMsg.innerText = "can't be larger than 50";
