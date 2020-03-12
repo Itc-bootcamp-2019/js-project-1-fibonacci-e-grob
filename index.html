@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <h1 class="title">Fibonacci Calculator</h1>
+    <h1 class="display-1 title">Fibonacci Calculator</h1>
     <div class="form-group">
       <label class="label" for="inputNumber">The Fibonacci Of</label>
       <input
@@ -35,9 +35,17 @@
         Is
       </button>
 
-      <span class="loader" id="loader"></span>
+      <span class="loader visibility" id="loader"></span>
       <span id="result"></span>
       <span id="errorFortyTwo"></span>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="saveCalc" />
+        <label class="form-check-label save-calc" for="saveCalc">
+          Save Calculation</label
+        >
+      </div>
+
       <div id="error-50"></div>
     </div>
     <div>
